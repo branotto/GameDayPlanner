@@ -2,11 +2,10 @@
 
 
 
-
-
-
-
-
+function initMap(mapOptions) {
+    
+    let map = new google.maps.Map(document.getElementById('map'), mapOptions);
+}
 
 //Main handler for API Calls
 function handleAPIRequests(apiQuery)
@@ -14,8 +13,16 @@ function handleAPIRequests(apiQuery)
 
     console.log(apiQuery);
 
-    //Make Google Maps API Call
+    let mapOptions = {
+        zoom: 4,
+        center: {
+            lat : 39.2904,
+            lng : -76.6122
+        }
+    };
 
+    //Make Google Maps API Call
+    initMap(mapOptions);
 
     //Make EventBrite API Call
 

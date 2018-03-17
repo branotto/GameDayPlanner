@@ -18,4 +18,9 @@ nav {
     color: #2669D2;
 }
 
+#map {
+    width: 100%;
+    height: 400px;
+    background-color: grey;
+  }
 
