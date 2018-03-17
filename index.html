@@ -32,21 +32,38 @@
                     </div>
             </div>
         </nav>
+
+        <header role="heading" class="container">
+            <div class="jumbotron">
+                <h1 class="text-center">Welcome to Sports Trip</h1>
+                <h3 class="text-center">Going to the game? We have all the info you need!</h3>
+
+                <form action="#" id="searchForm">
+                    <div class="form-group row">
+                        <label for="sport">Select your Sport:</label>
+                        <select class="form-control" id="sport">
+                            <option>Football</option>
+                            <option>Baseball</option>
+                            <option>Basketball</option>
+                            <option>Hockey</option>
+                            <option>Soccer</option>
+                        </select>
+                    </div>
+                    <div class="form-group row">
+                        <label class="search_label" for="searchArea"></label>
+                        <input class="search_input form-control col-sm" type="text" id="searchArea" placeholder="Location">
+                        <label class="search_label" for="startDate"></label>
+                        <input class="search_input form-control col-sm" id="startDate" type="date" value="2017-06-01">
+                        <label class="search_label" for="endDate"></label>
+                        <input class="search_input form-control col-sm" id="endDate" type="date" value="2017-06-01">
+                        <input class="search_button btn btn-primary" type="submit" value="Search events">
+                    </div>
+                </form>
+            </div>
+
+        </header>
         
         <main role="main">
-            <section class="container">
-                <div class="jumbotron">
-                    <h1 class="text-center">Welcome to Sports Trip</h1>
-                    <h3 class="text-center">Going to the game? We have all the info you need!</h3>
-
-                    <form action="#" id="searchForm">
-                        <label class="search_label" for="searchText">Search for your favorite sporting event. </label>
-                        <input class="search_input form-control" type="text" id="searchText" placeholder="Search sporting events">
-                        <input class="search_button btn btn-primary" type="submit" value="Search events">
-                    </form>
-                </div>
-            </section>
-
             <section class="container">
                 <div id="results" class="row">
 
