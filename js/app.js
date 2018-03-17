@@ -1,9 +1,31 @@
+const GEOCODE_URL = 'https://maps.googleapis.com/maps/api/geocode/json';
+const API_KEY = 'AIzaSyC_LJ5t0klmo5LuUXUJ66U8Zv5eeQ2XevU';
 
+//Geocode the location
+function geocode(searchLocation){
+    let query = {
+        address : searchLocation,
+        key : API_KEY 
+    };
 
+    let response = ($.getJSON(GEOCODE_URL, query, function(data){
+		
+		return data;
+        
+        
+		
+    }));
 
+    console.log(response);
+    let coords = response.results[0].geometry.location;
 
-function initMap(mapOptions) {
+    return coords;
     
+}
+
+//Handle Map Initiliaztion
+function initMap(mapOptions) {
+    console.log(mapOptions);
     let map = new google.maps.Map(document.getElementById('map'), mapOptions);
 }
 
@@ -13,14 +35,20 @@ function handleAPIRequests(apiQuery)
 
     console.log(apiQuery);
 
-    let mapOptions = {
+    let mapOptions  = {
         zoom: 4,
         center: {
-            lat : 39.2904,
-            lng : -76.6122
+            lat : 39.50,
+            lng : -98.35
         }
     };
 
+    if(apiQuery.location !== "")
+    {
+        mapOptions.center = geocode(apiQuery.location);
+    }
+
+    
     //Make Google Maps API Call
     initMap(mapOptions);
 
