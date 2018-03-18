@@ -8,16 +8,15 @@ function geocode(searchLocation){
         key : API_KEY 
     };
 
-    let response = ($.getJSON(GEOCODE_URL, query, function(data){
-		
-		return data;
-        
-        
-		
-    }));
-
-    console.log(response);
-    let coords = response.results[0].geometry.location;
+    let coords;
+    $.ajax({
+        url: `${GEOCODE_URL}?address=${query.searchLocation}&key=${query.key}`,
+        async: false,
+        dataType: 'json',
+        success: function (response) {
+            coords = response.results[0].geometry.location;;
+          }
+    });
 
     return coords;
     
@@ -25,15 +24,13 @@ function geocode(searchLocation){
 
 //Handle Map Initiliaztion
 function initMap(mapOptions) {
-    console.log(mapOptions);
+    console.log('mapoptions at init call' + mapOptions);
     let map = new google.maps.Map(document.getElementById('map'), mapOptions);
 }
 
 //Main handler for API Calls
 function handleAPIRequests(apiQuery)
 {
-
-    console.log(apiQuery);
 
     let mapOptions  = {
         zoom: 4,
@@ -43,12 +40,13 @@ function handleAPIRequests(apiQuery)
         }
     };
 
+    console.log('mapoptions before' + mapOptions);
     if(apiQuery.location !== "")
     {
         mapOptions.center = geocode(apiQuery.location);
     }
 
-    
+
     //Make Google Maps API Call
     initMap(mapOptions);
 
