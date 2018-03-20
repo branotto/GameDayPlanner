@@ -4,21 +4,21 @@ var coords = {
 };
 
 var map;
+var service;
 
 function createMarker(data) {
     console.log(data);
 }
 
-function searchPlaces(results, status) {
-    /*if (status == google.maps.places.PlacesServiceStatus.OK) {
-        for (let i = 0; i < results.length; i++) {
-          let place = results[i];
-          createMarker(results[i]);
-        }
-      }*/
+function searchPlaces(query) {
+    const API_KEY = 'AIzaSyC_LJ5t0klmo5LuUXUJ66U8Zv5eeQ2XevU';
+    const PLACES_URL = 'https://maps.googleapis.com/maps/api/place/textsearch/json';
+    
+    query.key = API_KEY;
 
-      console.log('Searching places.' );
-      //console.log(results);
+    ($.getJSON(PLACES_URL, query, function(data){
+        console.log(data);
+    }));
 }
 
 //Geocode the location
@@ -63,22 +63,22 @@ function handleAPIRequests(apiQuery)
     geocode(apiQuery.location);
 
     //Make Google Places API Call
-   /* let options = ['restaurant', 'hotel', 'parking'];
+   let options = ['restaurant', 'hotel', 'parking'];
 
     options.forEach(option => {
         
         let request = {
-            location: coords,
+            query: option,
+            location: coords.lat + ',' +coords.lng,
             radius: '500',
-            query: option
-          };
+            key: ""
+        };
 
         console.log(request);
 
-        service = new google.maps.places.PlacesService(map);
-        service.textSearch(request, searchPlaces);
+        searchPlaces(request);
       
-    });*/
+    });
     
 
     //Make EventBrite API Call
