@@ -1,6 +1,3 @@
-const GEOCODE_URL = 'https://maps.googleapis.com/maps/api/geocode/json';
-const API_KEY = 'AIzaSyC_LJ5t0klmo5LuUXUJ66U8Zv5eeQ2XevU';
-
 var coords = {
     lat : 39.50,
     lng : -98.35
@@ -8,8 +5,28 @@ var coords = {
 
 var map;
 
+function createMarker(data) {
+    console.log(data);
+}
+
+function searchPlaces(results, status) {
+    /*if (status == google.maps.places.PlacesServiceStatus.OK) {
+        for (let i = 0; i < results.length; i++) {
+          let place = results[i];
+          createMarker(results[i]);
+        }
+      }*/
+
+      console.log('Searching places.' );
+      //console.log(results);
+}
+
 //Geocode the location
 function geocode(searchLocation){
+   
+    const API_KEY = 'AIzaSyC_LJ5t0klmo5LuUXUJ66U8Zv5eeQ2XevU';
+    const GEOCODE_URL = 'https://maps.googleapis.com/maps/api/geocode/json';
+
     let query = {
         address : searchLocation,
         key : API_KEY 
@@ -28,12 +45,14 @@ function geocode(searchLocation){
         };
         
         initMap(mapOptions);
+
     }));
 }
 
 //Handle Map Initiliaztion
 function initMap(mapOptions) {
-    
+    $('#results').removeClass('hide');
+
     map = new google.maps.Map(document.getElementById('map'), mapOptions);
 }
 
@@ -44,7 +63,23 @@ function handleAPIRequests(apiQuery)
     geocode(apiQuery.location);
 
     //Make Google Places API Call
-    //searchPlaces(coords)
+   /* let options = ['restaurant', 'hotel', 'parking'];
+
+    options.forEach(option => {
+        
+        let request = {
+            location: coords,
+            radius: '500',
+            query: option
+          };
+
+        console.log(request);
+
+        service = new google.maps.places.PlacesService(map);
+        service.textSearch(request, searchPlaces);
+      
+    });*/
+    
 
     //Make EventBrite API Call
 
@@ -82,25 +117,26 @@ function handleFormSubmission(sportsQuery)
 
 
 //Listen for Sport Selection
-function handleSportSelection()
+function handleSelections()
 {
-    
+
+    let $sportSelection = $('#js_sport option:selected');
+
     $('#js_sport').on('change', function(event){
-        let $sportSelection = $('#js_sport option:selected')
-        let sportQuery = $sportSelection.text();   
+        
+        let sportsQuery= $sportSelection.text();   
 
-        $("option[value='select']").attr("disabled", "disabled")
+        $("option[value='select']").attr("disabled", "disabled");
 
-        handleFormSubmission(sportQuery);
-
-    });
+        handleFormSubmission(sportsQuery);
+    }); 
 }
 
 
 //Document Ready Function
 function documentReady()
 {
-    handleSportSelection();  
+    handleSelections();  
 }
 
 

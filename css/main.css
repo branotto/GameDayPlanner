@@ -20,7 +20,10 @@ nav {
 
 #map {
     width: 100%;
-    height: 400px;
-    background-color: grey;
+    height: 500px;
+  }
+
+  .hide {
+      display: none;
   }
 
