@@ -53,10 +53,10 @@
                         <label class="search_label" for="searchArea"></label>
                         <input class="search_input form-control col-sm" type="text" id="searchArea" placeholder="Location">
                         <label class="search_label" for="startDate"></label>
-                        <input class="search_input form-control col-sm" id="startDate" type="date">
+                        <input class="search_input form-control col-sm" id="startDate" type="date" required>
                         <label class="search_label" for="endDate"></label>
                         <input class="search_input form-control col-sm" id="endDate" type="date">
-                        <input class="search_button btn btn-primary" type="submit" value="Search events">
+                        <input class="search_button btn btn-primary" type="submit" value="Search events" required>
                     </div>
                 </form>
             </div>
@@ -67,7 +67,9 @@
             <section class="container">
                 <div id="results" class="row hide">
                     <div id="map" class="col-lg"></div>
-                    <div id="eventList" class="col-sm"></div>
+                    <div id="eventList" class="col-sm">
+                        <h2>Local Events from EventBrite</h2>
+                    </div>
 
                 </div>
 
