@@ -27,3 +27,27 @@ nav {
       display: none;
   }
 
+  #eventList h2 {
+      text-align: center;
+  }
+
+  #events {
+      text-align: center;
+      margin : auto;
+      list-style-type : none;
+  }
+
+  li {
+      list-style: none;
+      text-align: center;
+  }
+
+  #events li button{
+      margin : auto;
+  }
+
+  .eventThumbnail {
+      display : block;
+      margin : auto;
+  }
+

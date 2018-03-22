@@ -10,6 +10,16 @@ function createMarker(data) {
     console.log(data);
 }
 
+function displayEventDetail()
+{
+    console.log('listening for event detail click');
+
+    $('#events').on('click', 'button', function(data)
+    {
+        console.log('event detail clicked');
+    });
+}
+
 function createEventDisplay(event)
 {
 
@@ -17,17 +27,19 @@ function createEventDisplay(event)
 
     
     let eventHTML =
-    `<div>
-        <h3>${event.name.html}
-        </h3>
-        <img src=${event.logo.url} alt=${event.name.html}>
-        ${event.description.html}
-        <a href=${event.url}>${event.vanity_url}</a>
+    `<li data-event-id="${event.id}">
+        <h4>${event.name.html}
+        </h4>
+        <img class="eventThumbnail" src="${event.logo.url}" alt="${event.name.html}">
+        <a href="${event.url}">Visit the Event page on eventbrite.com</a><br>
+        <button type="button" class="btn btn-link btn-md">Event Details</button>
 
-    </div>
+    </li>
     `;
 
     $('#eventList').append(eventHTML);
+
+    displayEventDetail();
     
 }
 
@@ -36,7 +48,7 @@ function eventSearch(apiQuery)
     const EVENTBRITE_URL = 'https://www.eventbriteapi.com/v3/events/search/';
     
     let formattedStartDate = apiQuery.start + "T00:00:00";
-    let formattedEndDate = apiQuery.end + "T00:00:00";
+    let formattedEndDate = apiQuery.end + "T23:59:59";
 
     let parameters = 
     {
