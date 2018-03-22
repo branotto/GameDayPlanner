@@ -12,7 +12,7 @@ function createMarker(data) {
 
 function displayEventDetail()
 {
-    console.log('listening for event detail click');
+    //console.log('listening for event detail click');
 
     $('#events').on('click', 'button', function(data)
     {
@@ -23,9 +23,6 @@ function displayEventDetail()
 function createEventDisplay(event)
 {
 
-    console.log(event);
-
-    
     let eventHTML =
     `<li data-event-id="${event.id}">
         <h4>${event.name.html}
@@ -76,15 +73,42 @@ function eventSearch(apiQuery)
 //Search locations using google text search api
 function searchPlaces(query)
 {
+    /*
     const API_KEY = 'AIzaSyC_LJ5t0klmo5LuUXUJ66U8Zv5eeQ2XevU';
     const PLACES_URL = 'https://maps.googleapis.com/maps/api/place/textsearch/json';
     
     query.key = API_KEY;
 
+    console.log(query);
+
+    
     ($.getJSON(PLACES_URL, query, function(data)
     {
         console.log(data);
-    }));
+    })); 
+    */
+
+
+   console.log(query);
+
+   service = new google.maps.places.PlacesService(map);
+   service.textSearch(query, function(data, status)
+    {
+        alert('ran a search');
+    });
+    
+}
+
+function callback(results, status) 
+{
+    if (status == google.maps.places.PlacesServiceStatus.OK) 
+    {
+      for (let i = 0; i < results.length; i++) 
+      {
+        let place = results[i];
+        createMarker(place);
+      }
+    }
 }
 
 
@@ -144,20 +168,17 @@ function handleAPIRequests(apiQuery)
         let request = 
         {
             query: option,
-            location: coords.lat + ',' +coords.lng,
-            radius: '500',
-            key: ""
+            location: coords,
+            radius: '500'
         };
 
-        //searchPlaces(request);
+        searchPlaces(request);
       
     });
     
 
     //Make EventBrite API Call
     eventSearch(apiQuery);
-
-    //Make FourSquare API Call
 
 }
 
