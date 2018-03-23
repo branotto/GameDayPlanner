@@ -10,11 +10,11 @@ function createMarker(data) {
     console.log(data);
 }
 
+
 function displayEventDetail()
 {
-    //console.log('listening for event detail click');
 
-    $('#events').on('click', 'button', function(data)
+    $('#eventList').on('click', 'button', function(data)
     {
         console.log('event detail clicked');
     });
@@ -24,19 +24,19 @@ function createEventDisplay(event)
 {
 
     let eventHTML =
-    `<li data-event-id="${event.id}">
+    `<li>
         <h4>${event.name.html}
         </h4>
         <img class="eventThumbnail" src="${event.logo.url}" alt="${event.name.html}">
         <a href="${event.url}">Visit the Event page on eventbrite.com</a><br>
-        <button type="button" class="btn btn-link btn-md">Event Details</button>
+        <button data-event-id="${event.id}" type="button" class="btn btn-link btn-md">Event Details</button>
 
     </li>
     `;
 
     $('#eventList').append(eventHTML);
 
-    displayEventDetail();
+    
     
 }
 
@@ -59,12 +59,15 @@ function eventSearch(apiQuery)
 
     ($.getJSON(EVENTBRITE_URL, parameters, function(data)
     {
+    
         let events = data.events;
 
         events.forEach(event =>
         {
             createEventDisplay(event);
         });
+
+        displayEventDetail();
     }));
     
 }
@@ -73,29 +76,10 @@ function eventSearch(apiQuery)
 //Search locations using google text search api
 function searchPlaces(query)
 {
-    /*
-    const API_KEY = 'AIzaSyC_LJ5t0klmo5LuUXUJ66U8Zv5eeQ2XevU';
-    const PLACES_URL = 'https://maps.googleapis.com/maps/api/place/textsearch/json';
-    
-    query.key = API_KEY;
-
-    console.log(query);
-
-    
-    ($.getJSON(PLACES_URL, query, function(data)
-    {
-        console.log(data);
-    })); 
-    */
-
-
    console.log(query);
 
    service = new google.maps.places.PlacesService(map);
-   service.textSearch(query, function(data, status)
-    {
-        alert('ran a search');
-    });
+   service.textSearch(query, callback);
     
 }
 
@@ -125,22 +109,20 @@ function geocode(searchLocation)
         key : API_KEY 
     };
 
-    ($.getJSON(GEOCODE_URL, query, function(data)
-    {
-	    
-        coords = {
-            lat : data.results[0].geometry.location.lat,
-            lng : data.results[0].geometry.location.lng
+    $.ajax( GEOCODE_URL, 
+        {
+            async : false,
+            data : query,
+            success : function(data)
+            {
+                coords = {
+                    lat : data.results[0].geometry.location.lat,
+                    lng : data.results[0].geometry.location.lng
+                }; 
+            }
         }
-
-        let mapOptions  = {
-            zoom: 10,
-            center: coords
-        };
-        
-        initMap(mapOptions);
-
-    }));
+           
+    )
 }
 
 
@@ -158,6 +140,13 @@ function handleAPIRequests(apiQuery)
 {
     //Find the location the user entered
     geocode(apiQuery.location);
+    
+    let mapOptions  = {
+        zoom: 10,
+        center: coords
+    };
+    
+    initMap(mapOptions);
 
     //Make Google Places API Call
    let options = [apiQuery.sport, 'restaurant', 'hotel', 'parking'];
