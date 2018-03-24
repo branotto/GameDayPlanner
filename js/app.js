@@ -122,7 +122,7 @@ function createEventDisplay(event)
     </li>
     `;
 
-    $('#eventList').append(eventHTML);
+    $('#events').append(eventHTML);
  
 }
 
@@ -150,7 +150,7 @@ function eventSearch(apiQuery)
     
         let events = data.events;
 
-        $('#eventList').html("");
+        $('#events').html("");
 
         events.forEach(event =>
         {
