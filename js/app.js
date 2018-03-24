@@ -1,16 +1,37 @@
-var coords = {
-    lat : 39.50,
-    lng : -98.35
-};
-
+//Global variables to handle API calls.
+var coords;
 var map;
 var service;
 
-function createMarker(data) {
+
+//Add a marker to the map
+function createMarker(data) 
+{
     console.log(data);
+    let marker = new google.maps.Marker(
+        {
+            position : data.geometry.location,
+            map : map
+        });
+
+    marker.infoWindow = new google.maps.InfoWindow(
+        {
+            content : 
+            `
+            <h5>${data.name}</h5>
+            <p>${data.formatted_address}</p>
+            `
+        });
+
+    marker.addListener('click', function()
+        {
+            marker.infoWindow.open(map, marker);
+        });
+
 }
 
 
+//Listen for detailed event request and display the individual event.
 function displayEventDetail()
 {
 
@@ -20,6 +41,8 @@ function displayEventDetail()
     });
 }
 
+
+//Create the event list and append items to the DOC
 function createEventDisplay(event)
 {
 
@@ -35,11 +58,11 @@ function createEventDisplay(event)
     `;
 
     $('#eventList').append(eventHTML);
-
-    
-    
+ 
 }
 
+
+//Search for events using Eventbrite API
 function eventSearch(apiQuery)
 {
     const EVENTBRITE_URL = 'https://www.eventbriteapi.com/v3/events/search/';
@@ -76,14 +99,15 @@ function eventSearch(apiQuery)
 //Search locations using google text search api
 function searchPlaces(query)
 {
-   console.log(query);
 
    service = new google.maps.places.PlacesService(map);
-   service.textSearch(query, callback);
+   service.textSearch(query, processPlaces);
     
 }
 
-function callback(results, status) 
+
+//Process the places results
+function processPlaces(results, status) 
 {
     if (status == google.maps.places.PlacesServiceStatus.OK) 
     {
@@ -92,6 +116,9 @@ function callback(results, status)
         let place = results[i];
         createMarker(place);
       }
+    } else 
+    {
+        alert('Error searching for locations. Please try again.');
     }
 }
 
@@ -149,7 +176,7 @@ function handleAPIRequests(apiQuery)
     initMap(mapOptions);
 
     //Make Google Places API Call
-   let options = [apiQuery.sport, 'restaurant', 'hotel', 'parking'];
+   let options = [apiQuery.sport, 'restaurant']//, 'hotel', 'parking'];
 
     options.forEach(option => 
     {
@@ -158,7 +185,7 @@ function handleAPIRequests(apiQuery)
         {
             query: option,
             location: coords,
-            radius: '500'
+            radius: '250'
         };
 
         searchPlaces(request);
