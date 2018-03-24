@@ -7,7 +7,7 @@ var service;
 //Add a marker to the map
 function createMarker(data) 
 {
-    console.log(data);
+   
     let marker = new google.maps.Marker(
         {
             position : data.geometry.location,
@@ -37,15 +37,80 @@ function displayEventDetail()
 
     $('#eventList').on('click', 'button', function(data)
     {
-        console.log('event detail clicked');
+        let eventID = $(this).attr('data-event-id');
+
+        detailEventQuery(eventID);
+
     });
+}
+
+//Listen for click to return to the eventlist.
+function returnToEventList()
+{
+
+    $('#eventDetail').on('click', 'button', function(data)
+    {
+        $('#eventDetail').html("").addClass('hide');
+
+        $('#eventList').removeClass('hide');
+    
+        displayEventDetail();
+
+    });
+   
+}
+
+
+//Display a single event
+function displaySingleEvent(eventDetail)
+{
+    $('#eventList').addClass('hide');
+
+    $('#eventDetail').removeClass('hide');
+
+
+    let eventHTML =
+    `<li>
+        <button type="button" class="btn btn-link btn-md">Back to Event List</button>
+        <h4>${eventDetail.name.html}
+        </h4>
+        <img class="eventThumbnail" src="${eventDetail.logo.url}" alt="${eventDetail.name.html}">
+        <a href="${eventDetail.url}">Visit the Event page on eventbrite.com</a><br>
+        ${eventDetail.description.html}
+    </li>
+    `;
+
+    $('#eventDetail').html(eventHTML);
+
+    returnToEventList();
+}
+
+
+//Search for a specific event using Eventbrite API
+function detailEventQuery(eventID)
+{
+    const EVENTBRITE_DETAIL_URL = 'https://www.eventbriteapi.com/v3/events/';
+
+    let parameters = 
+    {
+        token : 'EDV4JBTI3R6EUVDOU3PP'
+    };
+    
+    ($.getJSON(EVENTBRITE_DETAIL_URL + eventID + "/", parameters, function(data)
+    {
+        let eventDetail = data;
+
+        displaySingleEvent(eventDetail);
+        
+    }));
+    
 }
 
 
 //Create the event list and append items to the DOC
 function createEventDisplay(event)
 {
-
+    
     let eventHTML =
     `<li>
         <h4>${event.name.html}
@@ -85,6 +150,8 @@ function eventSearch(apiQuery)
     
         let events = data.events;
 
+        $('#eventList').html("");
+
         events.forEach(event =>
         {
             createEventDisplay(event);
@@ -106,7 +173,7 @@ function searchPlaces(query)
 }
 
 
-//Process the places results
+//Callback function to process the places results
 function processPlaces(results, status) 
 {
     if (status == google.maps.places.PlacesServiceStatus.OK) 
@@ -142,7 +209,8 @@ function geocode(searchLocation)
             data : query,
             success : function(data)
             {
-                coords = {
+                coords = 
+                {
                     lat : data.results[0].geometry.location.lat,
                     lng : data.results[0].geometry.location.lng
                 }; 
@@ -169,13 +237,14 @@ function handleAPIRequests(apiQuery)
     geocode(apiQuery.location);
     
     let mapOptions  = {
-        zoom: 10,
+        zoom: 12,
         center: coords
     };
     
+    //Initialize the map
     initMap(mapOptions);
 
-    //Make Google Places API Call
+    //Set the options for the google places textsearch api.
    let options = [apiQuery.sport, 'restaurant']//, 'hotel', 'parking'];
 
     options.forEach(option => 
@@ -188,6 +257,7 @@ function handleAPIRequests(apiQuery)
             radius: '250'
         };
 
+        //Make google textsearch api call
         searchPlaces(request);
       
     });
@@ -244,11 +314,4 @@ function handleSelections()
 }
 
 
-//Document Ready Function
-function documentReady()
-{
-    handleSelections();  
-}
-
-
-(documentReady());
+(handleSelections());  
