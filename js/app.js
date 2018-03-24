@@ -245,7 +245,7 @@ function handleAPIRequests(apiQuery)
     initMap(mapOptions);
 
     //Set the options for the google places textsearch api.
-   let options = [apiQuery.sport, 'restaurant']//, 'hotel', 'parking'];
+   let options = [apiQuery.sport, 'restaurant', 'hotel', 'parking'];
 
     options.forEach(option => 
     {
