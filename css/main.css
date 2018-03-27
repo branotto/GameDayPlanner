@@ -18,11 +18,10 @@ nav {
     color: #2669D2;
 }
 
-header {
+.jumbotron {
     background : url('../img/Game Day Planner Background');
-    background-position: center center;
+    background-position: center;
     background-repeat: no-repeat;
-    background-attachment:fixed;
     background-size: cover;
 }
 
