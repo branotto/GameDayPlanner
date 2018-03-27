@@ -3,9 +3,9 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="Find all the info you need for a successful Sports Trip.">
+        <meta name="description" content="Find all the info you need for a successful Game Day.">
     
-        <title>SportsTrip Info</title>
+        <title>Game Day Planner</title>
         
         <!-- Google Font -->
         <link href="https://fonts.googleapis.com/css?family=Merriweather|Source+Sans+Pro" rel="stylesheet">
@@ -23,26 +23,19 @@
         <nav class="navbar navbar-default" role="navigation">
             <div class="container">
                <div class="d-flex justify-content-start">
-                        <a class="navbar-brand" href="#">Game Day Planner</a>
-                    </div>
-                    
-                    <div class="d-flex justify-content-end">
-                            <a class="btn btn-primary" href="#" role="button">Sign Up</a>
-                            <a class="btn btn-primary" href="#" role="button">Log In</a>
-                    </div>
+                    <h1 class="navbar-brand">Welcome to Game Day Planner</h1>
+                </div>
             </div>
         </nav>
 
         <header role="heading" class="container">
             <div class="jumbotron">
-                <h1 class="text-center">Welcome to Game Day Planner</h1>
-                <h3 class="text-center">Going to the game? We have all the info you need! Find area restaurants, 
-                    hotels and parking as well as local events to compliment your trip.</h3>
+                <h2 class="text-center">Going to the game? We have all the info you need!</h3>
 
                 <form action="#" id="searchForm">
-                    <div class="form-group row">
-                        <select class="form-control col-md" form="searchForm" id="js_sport" required>
-                            <option value="select">Select a sport</option>
+                    <div class="form-group form-row">
+                        <select class="form-control col-md" form="searchForm" id="js_sport" required aria-required="true">
+                            <option value="select a sport">Select a sport</option>
                             <option value="football">Football</option>
                             <option value="baseball">Baseball</option>
                             <option value="basketball">Basketball</option>
@@ -50,14 +43,37 @@
                             <option value="soccer">Soccer</option>
                         </select>
                     </div>
-                    <div class="form-group row">
+                    <div class="form-row">
                         <label class="search_label" for="searchArea"></label>
-                        <input class="search_input form-control col-sm" type="text" id="searchArea" placeholder="Location" required>
-                        <label class="search_label" for="startDate"></label>
-                        <input class="search_input form-control col-sm" id="startDate" type="date" required>
-                        <label class="search_label" for="endDate"></label>
-                        <input class="search_input form-control col-sm" id="endDate" type="date">
-                        <input class="search_button btn btn-primary" type="submit" value="Search events" required>
+                        <input class="search_input form-control col-sm" type="text" id="searchArea" 
+                                placeholder="Enter a Location" required aria-required="true">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">           
+                            <label for="startDate">Start Date</label>
+                            <input class="form-control"id="startDate" type="date" required aria-required="true">
+                        </div>    
+                        <div class="form-group col-md-6">
+                            <label for="endDate">End Date</label>
+                            <input class="form-control" id="endDate" type="date" required aria-required="true">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <input type="checkbox" id="restaurant" class="form-check-input" name="extras" value="restaurant" aria-describedby="passwordHelpBlock" checked>
+                            <label class="form-check-label" for="restaurant">Local Restaurants</label>
+                            <input type="checkbox" id="parking" class="form-check-input" name="extras" value="parking" aria-describedby="passwordHelpBlock" checked>
+                            <label class="form-check-label" for="parking">Local Parking</label>
+                            <input type="checkbox" id="hotel" class="form-check-input" name="extras" value="hotel" aria-describedby="passwordHelpBlock" checked>
+                            <label class="form-check-label" for="hotel">Local Hotels</label>
+                            <small id="extrasHelpBlock" class="form-text text-muted">
+                                    Select the additional items you would like to add to the map.
+                            </small>    
+                        </div>
+                        <div class="form-group col-md-6">
+                            <input class="search_button btn btn-primary" type="submit" value="Search">
+                        </div>
                     </div>
                 </form>
             </div>

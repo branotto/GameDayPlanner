@@ -10,12 +10,20 @@ h1, h2, h3, h4, h5, h6 {
     font-family: 'Merriweather', serif;
 }
 
-h3 {
-    margin: 15px auto;
+.form-check-label {
+    margin-right: 30px; 
 }
 
 nav {
     color: #2669D2;
+}
+
+header {
+    background : url('../img/Game Day Planner Background');
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment:fixed;
+    background-size: cover;
 }
 
 #map {
