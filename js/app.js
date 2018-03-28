@@ -4,10 +4,10 @@ var map;
 var service;
 var infowindow = new google.maps.InfoWindow();
 
+
 //Add a marker to the map
-function createMarker(data) 
+function createMarker(data, image) 
 {
-   
     let marker = new google.maps.Marker(
         {
             position : data.geometry.location,
@@ -20,15 +20,38 @@ function createMarker(data)
         <p>${data.formatted_address}</p>
         `;
 
-    bindInfoWindow(marker, map, infowindow, content);   
+    bindInfoWindow(marker, map, infowindow, content, data);   
 }
 
-function bindInfoWindow(marker, map, infowindow, html) {
-    marker.addListener('click', function() {
+
+//Bind the shared info window
+function bindInfoWindow(marker, map, infowindow, html, data) 
+{
+    marker.addListener('click', function() 
+    {
         infowindow.setContent(html);
         infowindow.open(map, this);
+        //queryMapDetail(data);
     });
 } 
+
+//TODO FINISH FUNCTIONALITY 
+//show the map details
+function queryMapDetail(data)
+{
+    $('#eventDetail').addClass('hide');
+    $('#eventList').addClass('hide');
+    $('#mapDetail').removeClass('hide');
+
+    service.getDetails({ placeId: data.id}, function(place, status) 
+    {
+        if (status === google.maps.places.PlacesServiceStatus.OK)
+        {
+            console.log(place);
+            $('#mapDetail').html('<p>Map Details Here</p>');
+        }
+    });  
+}
 
 
 //Listen for detailed event request and display the individual event.
@@ -43,6 +66,7 @@ function displayEventDetail()
 
     });
 }
+
 
 //Listen for click to return to the eventlist.
 function returnToEventList()
