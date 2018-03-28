@@ -2,7 +2,7 @@
 var coords;
 var map;
 var service;
-
+var infowindow = new google.maps.InfoWindow();
 
 //Add a marker to the map
 function createMarker(data) 
@@ -14,21 +14,21 @@ function createMarker(data)
             map : map
         });
 
-    marker.infoWindow = new google.maps.InfoWindow(
-        {
-            content : 
-            `
-            <h5>${data.name}</h5>
-            <p>${data.formatted_address}</p>
-            `
-        });
+    let content =  
+        `
+        <h5>${data.name}</h5>
+        <p>${data.formatted_address}</p>
+        `;
 
-    marker.addListener('click', function()
-        {
-            marker.infoWindow.open(map, marker);
-        });
-
+    bindInfoWindow(marker, map, infowindow, content);   
 }
+
+function bindInfoWindow(marker, map, infowindow, html) {
+    marker.addListener('click', function() {
+        infowindow.setContent(html);
+        infowindow.open(map, this);
+    });
+} 
 
 
 //Listen for detailed event request and display the individual event.
@@ -70,7 +70,7 @@ function displaySingleEvent(eventDetail)
 
 
     let eventHTML =
-    `<li>
+    `<li class="event_detail">
         <button type="button" class="btn btn-link btn-md">Back to Event List</button>
         <h4>${eventDetail.name.html}
         </h4>
@@ -152,12 +152,28 @@ function eventSearch(apiQuery)
 
         $('#events').html("");
 
-        events.forEach(event =>
-        {
-            createEventDisplay(event);
-        });
+        $('.js-event-count').html(`${events.length}`);
 
-        displayEventDetail();
+        if( events.length === 0 )
+        {
+            let noEvents = 
+            `<li>
+                <h4>Please try a different search.
+                </h4>
+            </li>`;
+
+            $('#events').html(noEvents); 
+
+        } else
+        {
+            events.forEach(event =>
+                {
+                    createEventDisplay(event);
+                });
+
+            displayEventDetail();
+        }
+        
     }));
     
 }
@@ -237,7 +253,7 @@ function handleAPIRequests(apiQuery)
     geocode(apiQuery.location);
     
     let mapOptions  = {
-        zoom: 12,
+        zoom: 14,
         center: coords
     };
     
@@ -291,8 +307,7 @@ function handleSelections()
     {
         event.preventDefault();
 
-        let $sportSelection = $('#js_sport option:selected');
-        let sportsQuery= $sportSelection.text();   
+        let sportsQuery = $('#js_sport option:selected').text();   
 
         $("option[value='select']").attr("disabled", "disabled");
         

@@ -47,6 +47,10 @@ li {
       margin : auto;
   }
 
+.event_detail {
+    text-align: justify;
+}
+
 .eventThumbnail {
       display : block;
       margin : auto;
