@@ -245,7 +245,22 @@ function handleAPIRequests(apiQuery)
     initMap(mapOptions);
 
     //Set the options for the google places textsearch api.
-   let options = [apiQuery.sport, 'restaurant', 'hotel', 'parking'];
+   let options = [apiQuery.sport];
+
+   if(apiQuery.extraQuery.restaurants)
+   {
+       options.push('restaurant');
+   }
+
+   if(apiQuery.extraQuery.parking)
+   {
+       options.push('parking');
+   }
+
+   if(apiQuery.extraQuery.hotel)
+   {
+       options.push('hotel');
+   }
 
     options.forEach(option => 
     {
@@ -262,20 +277,24 @@ function handleAPIRequests(apiQuery)
       
     });
     
-
     //Make EventBrite API Call
     eventSearch(apiQuery);
 
 }
 
 
-//Listen for full form submission
-function handleFormSubmission(sportsQuery)
+//Listen for Form Submission Selection
+function handleSelections()
 {
+   
     $('#searchForm').on('submit', function(event)
     {
-        
         event.preventDefault();
+
+        let $sportSelection = $('#js_sport option:selected');
+        let sportsQuery= $sportSelection.text();   
+
+        $("option[value='select']").attr("disabled", "disabled");
         
         let $location = $('#searchArea').val() ;
 
@@ -283,9 +302,16 @@ function handleFormSubmission(sportsQuery)
 
         let $endDate = $('#endDate').val();
 
+        let extras = {};
+
+        extras.restaurants = $('#restaurant').is(':checked');
+        extras.parking = $('#parking').is(':checked');
+        extras.hotel = $('#hotel').is(':checked');
+
         let apiQuery = 
         {
             sport : sportsQuery,
+            extraQuery : extras,
             location : $location,
             start : $startDate,
             end : $endDate
@@ -294,23 +320,7 @@ function handleFormSubmission(sportsQuery)
     handleAPIRequests(apiQuery);
 
     });
-}
 
-
-//Listen for Sport Selection
-function handleSelections()
-{
-
-    $('#js_sport').on('change', function(event)
-    {
-        
-        let $sportSelection = $('#js_sport option:selected');
-        let sportsQuery= $sportSelection.text();   
-
-        $("option[value='select']").attr("disabled", "disabled");
-
-        handleFormSubmission(sportsQuery);
-    }); 
 }
 
 
