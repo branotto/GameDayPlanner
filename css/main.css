@@ -56,3 +56,7 @@ li {
       margin : auto;
   }
 
+  .mapThumbnail {
+    display : block;
+    margin : auto;
+}

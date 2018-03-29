@@ -25,32 +25,66 @@ function createMarker(data, image)
 
 
 //Bind the shared info window
-function bindInfoWindow(marker, map, infowindow, html, data) 
+function bindInfoWindow(marker, map, infowindow, html, location) 
 {
     marker.addListener('click', function() 
     {
+        
         infowindow.setContent(html);
         infowindow.open(map, this);
-        //queryMapDetail(data);
+        queryMapDetail(location);
     });
 } 
 
-//TODO FINISH FUNCTIONALITY 
-//show the map details
-function queryMapDetail(data)
+
+//show the selected map location details
+function queryMapDetail(location)
 {
+
     $('#eventDetail').addClass('hide');
     $('#eventList').addClass('hide');
     $('#mapDetail').removeClass('hide');
 
-    service.getDetails({ placeId: data.id}, function(place, status) 
+ 
+    service.getDetails({ placeId: location.place_id}, function(place, status) 
     {
+       
         if (status === google.maps.places.PlacesServiceStatus.OK)
         {
-            console.log(place);
-            $('#mapDetail').html('<p>Map Details Here</p>');
+
+            let placePhoto = place.photos[0];
+
+            let img_source = placePhoto.getUrl;
+
+            let placeHTML =
+            `<div class="placeDetail">
+                <button type="button" class="btn btn-link btn-md">Close</button>
+                <h4>${place.name}
+                </h4>
+                <img class="mapThumbnail" src="${img_source}" alt="${place.name}">
+                <a href="${place.website}">Visit the website.</a><br>
+                ${place.adr_address}
+            </div>
+            `;
+            
+            $('#mapDetail').html(placeHTML);
         }
+
+        returnToEvents();
     });  
+
+}
+
+
+//Close the map detail and display the event list
+function returnToEvents()
+{
+    $('#mapDetail').on('click', 'button', function(data)
+    {
+        $('#mapDetail').html("").addClass('hide');
+
+        $('#eventList').removeClass('hide');
+    });
 }
 
 
