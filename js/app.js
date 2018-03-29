@@ -16,7 +16,7 @@ function createMarker(data, image)
 
     let content =  
         `
-        <h5>${data.name}</h5>
+        <h3>${data.name}</h3>
         <p>${data.formatted_address}</p>
         `;
 
@@ -58,10 +58,10 @@ function queryMapDetail(location)
 
             let placeHTML =
             `<div class="placeDetail">
-                <button type="button" class="btn btn-link btn-md">Close</button>
-                <h4>${place.name}
-                </h4>
-                <img class="mapThumbnail" src="${img_source}" alt="${place.name}">
+                <button type="button" class="btn btn-dark btn-md">Close</button>
+                <h3 class="detailHeading" >${place.name}
+                </h3>
+                <img class="mapThumbnail img-fluid" src="${img_source}" alt="${place.name}">
                 <a href="${place.website}">Visit the website.</a><br>
                 ${place.adr_address}
             </div>
@@ -128,14 +128,14 @@ function displaySingleEvent(eventDetail)
 
 
     let eventHTML =
-    `<li class="event_detail">
-        <button type="button" class="btn btn-link btn-md">Back to Event List</button>
-        <h4>${eventDetail.name.html}
-        </h4>
-        <img class="eventThumbnail" src="${eventDetail.logo.url}" alt="${eventDetail.name.html}">
+    `<div class="event_detail">
+        <button type="button" class="btn btn-dark btn-md">Back to Event List</button>
+        <h3 class="detailHeading" >${eventDetail.name.html}
+        </h3>
+        <img class="eventThumbnail img-fluid" src="${eventDetail.logo.url}" alt="${eventDetail.name.html}">
         <a href="${eventDetail.url}">Visit the Event page on eventbrite.com</a><br>
         ${eventDetail.description.html}
-    </li>
+    </div>
     `;
 
     $('#eventDetail').html(eventHTML);
@@ -171,11 +171,11 @@ function createEventDisplay(event)
     
     let eventHTML =
     `<li>
-        <h4>${event.name.html}
-        </h4>
-        <img class="eventThumbnail" src="${event.logo.url}" alt="${event.name.html}">
+        <h3 class="detailHeading" >${event.name.html}
+        </h3>
+        <img class="eventThumbnail img-fluid" src="${event.logo.url}" alt="${event.name.html}">
         <a href="${event.url}">Visit the Event page on eventbrite.com</a><br>
-        <button data-event-id="${event.id}" type="button" class="btn btn-link btn-md">Event Details</button>
+        <button data-event-id="${event.id}" type="button" class="btn btn-dark btn-md">Event Details</button>
 
     </li>
     `;
@@ -216,8 +216,8 @@ function eventSearch(apiQuery)
         {
             let noEvents = 
             `<li>
-                <h4>Please try a different search.
-                </h4>
+                <h3 class="detailHeading" >Please try a different search.
+                </h3>
             </li>`;
 
             $('#events').html(noEvents); 

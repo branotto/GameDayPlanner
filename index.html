@@ -20,17 +20,18 @@
     </head>
 
     <body>
-        <header role="heading" class="container">
+        <header role="heading" aria-level="1" class="container">
             <div class="jumbotron">
                 <div class="row">
-                    <img src="img/Game Day Planner Background" alt="Collage of athletes from multiple sports">
+                    <img src="img/Game Day Planner Background" class="img-fluid" alt="Collage of athletes from multiple sports">
                 </div>
                
                 <h2 class="text-center">Going to the game? We have all the info you need!</h3>
 
                 <form action="#" id="searchForm">
                     <div class="form-group form-row">
-                        <select class="form-control col-md" form="searchForm" id="js_sport" required aria-required="true">
+                        <select class="form-control col-md" form="searchForm" id="js_sport" required 
+                                aria-label="Select a sport from the list" aria-required="true">
                             <option value="select a sport">Select a sport</option>
                             <option value="football">Football</option>
                             <option value="baseball">Baseball</option>
@@ -42,7 +43,7 @@
                     <div class="form-row">
                         <label class="search_label" for="searchArea"></label>
                         <input class="search_input form-control col-sm" type="text" id="searchArea" 
-                                placeholder="Enter a Location" required aria-required="true">
+                                aria-label="Enter a location" placeholder="Enter a Location" required aria-required="true">
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-6">           
@@ -57,18 +58,21 @@
 
                     <div class="form-row">
                         <div class="form-group col-md-6">
-                            <input type="checkbox" id="restaurant" class="form-check-input" name="extras" value="restaurant" aria-describedby="passwordHelpBlock" checked>
-                            <label class="form-check-label" for="restaurant">Local Restaurants</label>
-                            <input type="checkbox" id="parking" class="form-check-input" name="extras" value="parking" aria-describedby="passwordHelpBlock" checked>
-                            <label class="form-check-label" for="parking">Local Parking</label>
-                            <input type="checkbox" id="hotel" class="form-check-input" name="extras" value="hotel" aria-describedby="passwordHelpBlock" checked>
-                            <label class="form-check-label" for="hotel">Local Hotels</label>
-                            <small id="extrasHelpBlock" class="form-text text-muted">
-                                    Select the additional items you would like to add to the map.
-                            </small>    
+                            <fieldset>
+                                <legend>Additional Search Categories</legend>
+                                    <input type="checkbox" id="restaurant" class="form-check-input" name="extras" value="restaurant" aria-describedby="extrasHelpBlock" checked>
+                                    <label class="form-check-label" for="restaurant">Local Restaurants</label>
+                                    <input type="checkbox" id="parking" class="form-check-input" name="extras" value="parking" aria-describedby="extrasHelpBlock" checked>
+                                    <label class="form-check-label" for="parking">Local Parking</label>
+                                    <input type="checkbox" id="hotel" class="form-check-input" name="extras" value="hotel" aria-describedby="extrasHelpBlock" checked>
+                                    <label class="form-check-label" for="hotel">Local Hotels</label>
+                                    <small id="extrasHelpBlock" class="form-text text-muted">
+                                            Select the additional items you would like to add to the map.
+                                    </small>
+                            </fieldset>
                         </div>
                         <div class="form-group col-md-6">
-                            <input class="search_button btn btn-primary" type="submit" value="Search">
+                            <input class="search_button btn btn-dark" type="submit" value="Search">
                         </div>
                     </div>
                 </form>
@@ -76,7 +80,7 @@
 
         </header>
         
-        <main role="main">
+        <main role="main" aria-live="assertive">
             <section class="container">
                 <div id="results" class="row hide">
                     <div id="map" class="col-lg">

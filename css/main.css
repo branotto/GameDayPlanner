@@ -11,6 +11,12 @@ h1, h2, h3, h4, h5, h6 {
     font-family: 'Merriweather', serif;
 }
 
+.detailHeading {
+    font-size : 1em;
+    color :#675B68;
+    margin-top: 10px;
+}
+
 .form-check-label {
     margin-right: 30px; 
 }
@@ -40,6 +46,7 @@ h1, h2, h3, h4, h5, h6 {
 
 li {
       list-style: none;
+      margin-top: 20px;
       text-align: center;
   }
 
@@ -48,6 +55,7 @@ li {
   }
 
 .event_detail {
+    
     text-align: justify;
 }
 
