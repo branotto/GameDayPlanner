@@ -48,13 +48,18 @@ function queryMapDetail(location)
  
     service.getDetails({ placeId: location.place_id}, function(place, status) 
     {
-       
+        console.log(place);
         if (status === google.maps.places.PlacesServiceStatus.OK)
         {
 
+            let photoOptions = {
+                maxHeight : 200,
+                maxWidth: 200
+            };
+            
             let placePhoto = place.photos[0];
 
-            let img_source = placePhoto.getUrl;
+            let img_source = placePhoto.getUrl(photoOptions);
 
             let placeHTML =
             `<div class="placeDetail">

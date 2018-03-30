@@ -25,6 +25,10 @@ h1, h2, h3, h4, h5, h6 {
     background: transparent;
 }
 
+.search_button{
+    float: right;
+}
+
 #map {
     width: 100%;
     height: 750px;
@@ -42,6 +46,7 @@ h1, h2, h3, h4, h5, h6 {
       text-align: center;
       margin : auto;
       list-style-type : none;
+      padding:0;
   }
 
 li {
